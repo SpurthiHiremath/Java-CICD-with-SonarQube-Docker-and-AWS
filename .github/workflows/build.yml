@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-test-sonarqube:
-    name: Build, Test and SonarQube Analysis
+    name: CI/CD Pipeline
     runs-on: ubuntu-latest
 
     steps:
