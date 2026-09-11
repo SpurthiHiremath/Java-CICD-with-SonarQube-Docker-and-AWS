@@ -35,11 +35,9 @@ jobs:
       - name: SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
           mvn --batch-mode verify \
             org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=java-cicd-application \
-            -Dsonar.projectName="Java CI/CD Application" \
-            -Dsonar.host.url="${SONAR_HOST_URL}" \
-            -Dsonar.token="${SONAR_TOKEN}"
+             -Dsonar.projectKey=YOUR_PROJECT_KEY \
+             -Dsonar.organization=YOUR_ORGANIZATION_KEY
+             -Dsonar.token="${SONAR_TOKEN}"
