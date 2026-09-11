@@ -36,7 +36,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn --batch-mode verify \
+          mvn verify 
             org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
              -Dsonar.projectKey=SpurthiHiremath_Java-CICD-with-SonarQube-Docker-and-AWS
              -Dsonar.organization=spurthihiremath
