@@ -22,6 +22,6 @@ public class App {
 
         Files.writeString(Path.of("target/index.html"), html);
 
-        System.out.println("HTML file created: target/index.html");
+        LOGGER.info("HTML file created: target/index.html");
     }
 }
