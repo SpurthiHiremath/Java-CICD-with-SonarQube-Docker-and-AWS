@@ -1,6 +1,4 @@
 package com.example;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,6 +22,6 @@ public class App {
 
         Files.writeString(Path.of("target/index.html"), html);
 
-        LOGGER.info("HTML file created: target/index.html");
+        System.out.println("HTML file created: target/index.html");
     }
 }
