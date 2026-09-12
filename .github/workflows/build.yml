@@ -30,7 +30,7 @@ jobs:
         run: mvn clean compile
 
       - name: Run unit tests
-        run: mvn test
+        run: mvn clean test
 
       - name: SonarQube analysis
         env:
