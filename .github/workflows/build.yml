@@ -38,10 +38,8 @@ jobs:
         run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.8.0.7211:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=SpurthiHiremath_Java-CICD-with-SonarQube-Docker-and-AWS -Dsonar.organization=spurthihiremath -Dsonar.qualitygate.wait=true
 
       #Build the Image and name it 
-      - name: Build Docker Image
-        run: |
-          docker build \
-            --tag java-cicd-app:latest\ 
+      - name: Build Docker image
+        run: docker build --tag java-cicd-app:latest .
               .
 
       #Create and Start the Container
