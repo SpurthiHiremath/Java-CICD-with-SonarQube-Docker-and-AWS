@@ -35,5 +35,34 @@ jobs:
       - name: SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.8.0.7211:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=SpurthiHiremath_Java-CICD-with-SonarQube-Docker-and-AWS -Dsonar.organization=spurthihiremath
-          
+        run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.8.0.7211:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=SpurthiHiremath_Java-CICD-with-SonarQube-Docker-and-AWS -Dsonar.organization=spurthihiremath --Dsonar.qualitygate.wait=true
+
+      #Build the Image and name it 
+      - name: Build Docker Image
+        run: |
+          docker build \
+            --tag java-cicd-app:latest\
+
+      #Create and Start the Container
+      - name: Test Docker container
+        run: |
+          docker run --detach \
+            --name java-cicd-container \
+            --publish 8080:80 \
+            java-cicd-app:latest
+
+          for attempt in {1..10}; do
+            if curl --fail http://localhost:8080; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          docker logs java-cicd-container
+          exit 1
+
+      - name: Stop test container
+        if: always()
+        run: docker rm --force java-cicd-container || true
+        
+            
