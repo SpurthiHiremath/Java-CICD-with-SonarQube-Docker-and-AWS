@@ -60,10 +60,4 @@ jobs:
       - name: Push Docker image to ECR
         run: |
           docker push \
-          ${{ steps.login-ecr.outputs.registry }}/java-cicd-app:latest
-          
-      - name: Pull Docker images from ECR to Docker Desktop
-        run: |
-          docker pull \
-          ${{ steps.login-ecr.outputs.registry }}/java-cicd-app:latest
-                  
+          ${{ steps.login-ecr.outputs.registry }}/java-cicd-app:latest                 
