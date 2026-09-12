@@ -41,26 +41,24 @@ jobs:
       - name: Build Docker image
         run: docker build --tag java-cicd-app:latest .
 
-      #Create and Start the Container
-      - name: Test Docker container
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Tag Docker image
         run: |
-          docker run --detach \
-            --name java-cicd-container \
-            --publish 8080:80 \
-            java-cicd-app:latest
-
-          for attempt in {1..10}; do
-            if curl --fail http://localhost:8080; then
-              exit 0
-            fi
-            sleep 2
-          done
-
-          docker logs java-cicd-container
-          exit 1
-
-      - name: Stop test container
-        if: always()
-        run: docker rm --force java-cicd-container || true
-        
-            
+          docker tag java-cicd-app:latest \
+          ${{ steps.login-ecr.outputs.registry }}/java-cicd-app:latest
+      
+      - name: Push Docker image to ECR
+        run: |
+          docker push \
+          ${{ steps.login-ecr.outputs.registry }}/java-cicd-app:latest
+                  
