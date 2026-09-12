@@ -65,5 +65,5 @@ jobs:
       - name: Pull Docker images from ECR to Docker Desktop
         run: |
           docker pull \
-          YOUR_ACCOUNT_ID.dkr.ecr.YOUR_REGION.amazonaws.com/java-cicd-app:latest
+          ${{ steps.login-ecr.outputs.registry }}/java-cicd-app:latest
                   
