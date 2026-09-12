@@ -41,7 +41,8 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build \
-            --tag java-cicd-app:latest\
+            --tag java-cicd-app:latest\ 
+              .
 
       #Create and Start the Container
       - name: Test Docker container
